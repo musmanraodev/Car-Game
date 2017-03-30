@@ -1,0 +1,372 @@
+
+<html>
+
+<head>
+    <link rel="icon" href="images/icon.png">
+    
+<link rel="stylesheet" href="style.css">
+
+    <script type="text/javascript">
+    var carrunning = new Audio('sounds/carrunning.mp3');
+    var carongrass = new Audio('sounds/carongrass.wav');
+
+    var xPos = 7; // Creating variable for x position
+    var yPos = 285; // Creating variable for x position
+    var keys = { // creating objects and in that object, creating properties in properties
+        up: {
+            isPressed: false, // this will be used to check if key is pressed and respond to that
+            keyCode: 38, // this is keycode, which is different for each keys
+            direction: -1,
+            vertical: true,
+        },
+        down: {
+            isPressed: false,
+            keyCode: 40,
+            direction: 1,
+            vertical: true,
+        },
+        right: {
+            isPressed: false,
+            keyCode: 39,
+            direction: 1,
+            vertical: false,
+        },
+        left: {
+            isPressed: false,
+            keyCode: 37,
+            direction: -1,
+            vertical: false,
+        }
+
+    };
+
+    var bounce = true;
+
+    var speed = 10; // this is speed, how fast the car is going to go
+
+
+    function moveDownUp(direction) { // SO IF this is function is called so it will do this:
+
+
+        if ((yPos > 195 && yPos < 355 && xPos < 508) || (yPos > 195 && xPos > 377 && yPos < 700 && xPos < 508) || (yPos < 700 && xPos > 377 && yPos > 571 && xPos < 1070) ||
+            (xPos < 1070 && xPos > 927 && yPos < 700 && yPos > 195) ||
+            (yPos > 195 && xPos > 927 && yPos < 354)
+        ) { // the above are the coordinates for road, and then it is setting speed according to that.
+            yPos += direction * speed;
+            document.getElementById("demo").style.top = yPos + "px"; // here we are movnig the car using css position absolute property and telling it to move one px up, in other words we are changing css values using javascript, and thus making the car move upwards one px. 
+            // NOW GO TO LINE 188
+        } else if (yPos > 887) {
+            console.log("working");
+            yPos = yPos - 50;
+            //
+
+
+            document.getElementById("demo").classList.add("mslow");
+
+            bounce = false;
+            document.getElementById("demo").style.top = yPos;
+            // 
+
+            setTimeout(
+                function() {
+                    document.getElementById("demo").classList.remove("mslow");
+                    bounce = true;
+
+                }, 500);
+
+
+
+
+        } else if (yPos < -15) {
+            console.log("working");
+            yPos = yPos + 50;
+            //
+
+
+            document.getElementById("demo").classList.add("mslow");
+
+            bounce = false;
+            document.getElementById("demo").style.top = yPos;
+            // 
+
+            setTimeout(
+                function() {
+                    document.getElementById("demo").classList.remove("mslow");
+                    bounce = true;
+
+                }, 500);
+
+
+
+
+        } else {
+
+            yPos += direction * 2;
+            document.getElementById("demo").style.top = yPos + "px";
+
+        }
+    }
+
+
+
+    function moveLeftRight(direction) {
+
+        if ((xPos > 1857) && ((yPos > 173) && (yPos < 395))) {
+
+            xPos = -5;
+
+        } else if ((xPos < -20) && ((yPos > 173) && (yPos < 395))) {
+
+            xPos = 1855;
+
+        } else if (xPos < 1857) {
+
+
+            if ((yPos > 195 && yPos < 355 && xPos < 508) || (yPos > 195 && xPos > 377 && yPos < 700 && xPos < 508) || (yPos < 700 && xPos > 377 && yPos > 571 && xPos < 1070) ||
+                (xPos < 1070 && xPos > 927 && yPos < 700 && yPos > 195) ||
+                (yPos > 195 && xPos > 927 && yPos < 354)
+            ) {
+
+                xPos += direction * speed;
+                document.getElementById("demo").style.left = xPos + "px";
+
+            } else if ((xPos > 1695) && ((yPos < 173) || (yPos > 395))) {
+
+                xPos = xPos - 50;
+                document.getElementById("demo").classList.add("mslow");
+                bounce = false;
+                document.getElementById("demo").style.left = xPos;
+
+                setTimeout(
+                    function() {
+                        document.getElementById("demo").classList.remove("mslow");
+                        bounce = true;
+
+                    }, 500);
+            } else if ((xPos < -15) && ((yPos < 173) || (yPos > 395))) {
+
+                xPos = xPos + 50;
+                document.getElementById("demo").classList.add("mslow");
+                bounce = false;
+                document.getElementById("demo").style.left = xPos;
+
+                setTimeout(
+                    function() {
+                        document.getElementById("demo").classList.remove("mslow");
+                        bounce = true;
+
+                    }, 500);
+            } else {
+
+                xPos += direction * 2;
+                document.getElementById("demo").style.left = xPos + "px";
+
+            };
+        }
+
+
+    }
+
+
+
+    function playsound() {
+        carongrass.volume = 0.5;
+        carrunning.play();
+
+    }
+
+    function playcarongrass() {
+
+        carongrass.play();
+
+    }
+
+    function stopsound() {
+        carrunning.pause();
+        carrunning.currentTime = 1;
+    }
+
+    function stopcarongrass() {
+        carongrass.pause();
+    }
+
+
+
+    setInterval(function() { // this is to tell that with how much speed does the function run, like the web browser speed is  around 15, but the keyboard speed is slower than that.
+        for (var key in keys) { // this is the first step happening, it is checking in the object,
+            var obj = keys[key]; // it is using for in loop which is to loop through the object and checking values
+            if (bounce) {
+                if (obj.isPressed == true) { // it is checking if any specific value of object iskeypressed is true
+
+                    // AFTER THIS GO TO LINE 178
+
+                    movecar(obj.direction, obj.vertical); // now calling function and sending specific parameters, NOW GO TO LINE 145
+
+                    /* This is to check if the car is on grass or not, if it is then it plays sound based on that  */
+
+                    if ((yPos > 195 && yPos < 355 && xPos < 508) || (yPos > 195 && xPos > 377 && yPos < 700 && xPos < 508) || (yPos < 700 && xPos > 377 && yPos > 571 && xPos < 1070) || (xPos < 1070 && xPos > 927 && yPos < 700 && yPos > 195) || (yPos > 195 && xPos > 927 && yPos < 354)) {
+
+                        stopcarongrass();
+                        playsound();
+
+                    } else {
+
+                        stopsound();
+                        playcarongrass();
+
+                    }
+                }
+            }
+
+
+        }
+    }, 14);
+
+
+    // check what keys are pressed and move accordingly
+    function movecar(direction, vertical) {
+
+        /* NOW HERE we are rotating by checking if the up key and right keys is being pressed, meaning their values by accessing objects and then accessing that specific key and then accessing that specific .iskeypressed value and if those are true then rotate the car  to this much, and that is being done by using css rotation.*/
+        // now go to line 169
+        if (keys.up.isPressed && keys.right.isPressed) {
+
+            document.getElementById("demo").style.transform = "rotate(315deg)";
+        } else if (keys.up.isPressed && keys.left.isPressed) {
+            document.getElementById("demo").style.transform = "rotate(225deg)";
+        } else if (keys.down.isPressed && keys.left.isPressed) {
+            document.getElementById("demo").style.transform = "rotate(135deg)";
+        } else if (keys.down.isPressed && keys.right.isPressed) {
+            document.getElementById("demo").style.transform = "rotate(45deg)";
+        } else if (keys.right.isPressed) {
+            document.getElementById("demo").style.transform = "rotate(0deg)";
+        } else if (keys.up.isPressed) {
+            document.getElementById("demo").style.transform = "rotate(270deg)";
+        } else if (keys.down.isPressed) {
+            document.getElementById("demo").style.transform = "rotate(90deg)";
+        } else if (keys.left.isPressed) {
+            document.getElementById("demo").style.transform = "rotate(180deg)";
+        }
+
+
+        if (vertical) { // it means if vertical is true, which is true for up and down key in their values, then do this, if not
+            moveDownUp(direction); // then do this, so if the up key is pressed then the line 170 will work and call the function with parameters, // NOW GO TO LINE 41
+        } else {
+            moveLeftRight(direction);
+        }
+
+
+    }
+
+
+
+    //    document.onkeydown = function(event) { // HERE it is being checked by using html dom, if the key is pressed, if it is pressed then the keys.ispressed being made true for that specific key which is being pressed, by using the key code.
+    //        if (keys[key].keyCode == event.keyCode) {
+    //                keys[key].isPressed = true;
+    // // document.getElementById("demo").className += "smoke";
+
+    //        }
+    //      };
+    // NOW GO TO LINE 123
+
+    document.onkeydown = function(event) {
+        for (var key in keys) {
+            if (keys[key].keyCode == event.keyCode) {
+                keys[key].isPressed = true;
+
+                // document.getElementById("demo").className += "smoke";
+
+            }
+
+        }
+    };
+
+
+    document.onkeyup = function(event) { //NOW if the key is being relesased so then it will make the value .isbeingpressed for that specific key to false, and it won't work anymore -- and again we are using for in loop to loop through object properties.
+        for (var key in keys) {
+            if (keys[key].keyCode == event.keyCode) {
+                keys[key].isPressed = false;
+                if ((yPos > 195 && yPos < 355 && xPos < 508) || (yPos > 195 && xPos > 377 && yPos < 700 && xPos < 508) || (yPos < 700 && xPos > 377 && yPos > 571 && xPos < 1070) ||
+                    (xPos < 1070 && xPos > 927 && yPos < 700 && yPos > 195) ||
+                    (yPos > 195 && xPos > 927 && yPos < 354)
+                ) {
+                    stopsound();
+                } else {
+                    stopcarongrass();
+                }
+            }
+        }
+    };
+    </script>
+</head>
+
+<body>
+    <div class="grass">
+        <div id="firststep">
+            <div class="everycar">
+                <img src="images/car1.png" id="car1" class="car car1">
+                <img src="images/car2.png" id="car2" class="car car2">
+                <img src="images/car3.png" id="car3" class="car car3">
+                <img src="images/car4.png" id="car4" class="car car4">
+            </div>
+        </div>
+        <div id="nextstep">
+            <div>
+                <img src="images/road.jpg" class="road">
+            </div>
+            <div id="demo">
+                <img src="" id="newcar" class="carv">
+                <div class="smoke"></div>
+            </div>
+        </div>
+    </div>
+    <script type="text/javascript">
+    var car1 = document.getElementById("car1");
+    car1.onclick = function() {
+        next("images/car1.png", " car1");
+    };
+
+    var car2 = document.getElementById("car2");
+    car2.onclick = function() {
+        next("images/car2.png", " car2");
+    };
+
+    var car3 = document.getElementById("car3");
+    car3.onclick = function() {
+        next("images/car3.png", " car3");
+
+    };
+
+    var car4 = document.getElementById("car4");
+    car4.onclick = function() {
+        next("images/car4.png", " car4");
+
+    };
+
+
+    function next(car, abc) {
+
+
+
+
+
+
+
+
+        var x = document.getElementById('firststep');
+        x.style.display = 'none';
+
+        var x = document.getElementById('nextstep');
+        x.style.display = 'block';
+
+
+
+        var newcar = document.getElementById('newcar');
+        newcar.src = car;
+        newcar.className += abc;
+
+
+    }
+    </script>
+</body>
+
+</html>
