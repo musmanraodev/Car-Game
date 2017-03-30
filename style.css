@@ -1,0 +1,116 @@
+  body {
+        overflow: hidden;
+    }
+    /* 
+.smoke {
+    background-color: red;
+    height: 30px;
+    border-radius: 2000px;
+    width: 30px;
+    z-index: 200;
+    position: absolute;
+    left:-200px;
+    top: -50px;
+
+}*/
+    
+    #demo {
+        position: absolute;
+        left: 7px;
+        top: 285px;
+        width: auto;
+        height: 100px;
+        z-index: 200;
+    }
+    
+    .mslow {
+        transition: 0.2s;
+    }
+    
+    .road {
+        position: absolute;
+        top: 0px;
+        left: 0px;
+        z-index: 99;
+        border-right: 13px groove #316124;
+        border-bottom: 13px groove #316124;
+    }
+    
+    .carv {
+        z-index: 150;
+    }
+    
+    #nextstep {
+        display: none;
+    }
+    /* first step start*/
+    
+    .car {
+        padding: 5vh;
+        -webkit-animation: spin 8s linear infinite;
+        -moz-animation: spin 8s linear infinite;
+        animation: spin 8s linear infinite;
+    }
+    
+    @-moz-keyframes spin {
+        100% {
+            -moz-transform: rotate(360deg);
+        }
+    }
+    
+    @-webkit-keyframes spin {
+        100% {
+            -webkit-transform: rotate(360deg);
+        }
+    }
+    
+    @keyframes spin {
+        100% {
+            -webkit-transform: rotate(360deg);
+            transform: rotate(360deg);
+        }
+    }
+    
+    .car:hover {
+        -webkit-filter: drop-shadow(5px 5px 5px #222);
+        filter: drop-shadow(5px 5px 5px #222);
+    }
+    
+    .everycar {
+        margin-left: auto;
+        margin-right: auto;
+        position: relative;
+        text-align: center;
+        width: 100%;
+        margin-top: 35vh;
+    }
+    
+    .grass {
+        background: url("images/grass.jpg");
+        width: 100%;
+        height: 100vh;
+        position: absolute;
+        top: 0px;
+        left: 0px;
+    }
+    
+    .car1 {
+        height: 100px;
+        width: auto;
+    }
+    
+    .car2 {
+        height: 85px;
+        width: auto;
+    }
+    
+    .car3 {
+        height: 85px;
+        width: auto;
+    }
+    
+    .car4 {
+        height: 100px;
+        width: auto;
+    }
+    /*first step end*/
